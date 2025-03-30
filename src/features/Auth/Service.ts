@@ -26,7 +26,7 @@ export const AuthService = {
 
     const user = await AuthModel.findOne({ email });
     if (user) {
-      return { success: false, message: 'User already exists' };
+      return { success: false, statusCode: 404, error: 'User already exists' };
     }
 
     const hashedPassword = crypto.hashSync(password, 10);

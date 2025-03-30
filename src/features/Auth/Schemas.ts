@@ -33,7 +33,8 @@ export const AuthSchema: EntitySchema = {
       body: postRegisterAuthBodyValidation,
       response: {
         201: userRegisterResponse,
-        400: schemaValidationError
+        400: schemaValidationError,
+        404: genericError,
       },
       summary: 'Register a new user',
     }

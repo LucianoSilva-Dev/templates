@@ -20,7 +20,9 @@ export const AuthController: Controller = {
       request.body as registerAuthBody,
     );
     if (!response.success) {
-      return reply.status(400).send({ error: response.message });
+      return reply
+        .status(response.statusCode as number)
+        .send({ error: response.error });
     }
 
     return reply.status(201).send({ message: response.message });

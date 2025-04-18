@@ -2,18 +2,10 @@
 import type { FastifyReply } from 'fastify';
 import { AuthModel } from './Model';
 import crypto from 'bcryptjs';
-import type {
-  getTokenAuthBody,
-  registerAuthBody,
-  GetTokenServiceResponse,
-  RegisterServiceResponse,
-} from './Types';
+import type { getTokenAuthBody, registerAuthBody } from './Types';
 
 export const AuthService = {
-  getToken: async (
-    userCredentials: getTokenAuthBody,
-    reply: FastifyReply,
-  ): Promise<GetTokenServiceResponse> => {
+  getToken: async (userCredentials: getTokenAuthBody, reply: FastifyReply) => {
     const { email, password } = userCredentials;
     const user = await AuthModel.findOne({ email });
     if (!user) {
@@ -28,9 +20,7 @@ export const AuthService = {
     return { auth: true, token: jwt };
   },
 
-  register: async (
-    User: registerAuthBody,
-  ): Promise<RegisterServiceResponse> => {
+  register: async (User: registerAuthBody) => {
     const { name, email, password } = User;
 
     const user = await AuthModel.findOne({ email });

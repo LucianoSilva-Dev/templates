@@ -2,13 +2,20 @@
 import type { FastifyReply } from 'fastify';
 import { AuthModel } from './Model';
 import crypto from 'bcryptjs';
-import type { getTokenAuthBody, registerAuthBody } from './Types';
-
+import type {
+  getTokenAuthBody,
+  registerAuthBody,
+  GetTokenServiceResponse,
+  RegisterServiceResponse,
+} from './Types';
 
 export const AuthService = {
-  getToken: async (userCredentials: getTokenAuthBody, reply: FastifyReply) => {
+  getToken: async (
+    userCredentials: getTokenAuthBody,
+    reply: FastifyReply,
+  ): Promise<GetTokenServiceResponse> => {
     const { email, password } = userCredentials;
-    const user = await AuthModel.findOne({ email});
+    const user = await AuthModel.findOne({ email });
     if (!user) {
       return { auth: false, token: null };
     }
@@ -21,7 +28,9 @@ export const AuthService = {
     return { auth: true, token: jwt };
   },
 
-  register: async (User: registerAuthBody) => {
+  register: async (
+    User: registerAuthBody,
+  ): Promise<RegisterServiceResponse> => {
     const { name, email, password } = User;
 
     const user = await AuthModel.findOne({ email });
